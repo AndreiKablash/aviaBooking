@@ -1,0 +1,13 @@
+
+rsquid:S00116"TRename this field "GET_BY_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›¯âQ8ıÇòş‰-
+{squid:S00116"WRename this field "DELETE_BY_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÎßúıÿÿÿÿ8ıÇòş‰-
+nsquid:S11921"KDefine a constant instead of duplicating this literal "Exception" 10 times.(—»ìıÿÿÿÿ8¦ÃÜ‰-
+usquid:S00116"QRename this field "LOGGER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ì¡Æ‰üÿÿÿÿ8ˆ×’Û‰-
+jsquid:S2095("GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ù«ÆÃùÿÿÿÿ8ş§¶øŠ-
+vsquid:S00116"RRename this field "GET_ALL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î¢‡Ûøÿÿÿÿ8ıÇòş‰-
+squid:S00116"[Rename this field "UPDATE_STATEMENT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş€Š¶ûÿÿÿÿ8Ù¬³İ‰-
+qsquid:S00116"SRename this field "INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢ÌÎa8ËİŒíŠ-
+~squid:S00116"ZRename this field "TABLE_NAME_TEMP" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜÈôùÿÿÿÿ8ÀÙ±ÿ‰-
+vsquid:S1192N"XDefine a constant instead of duplicating this literal "ConnectionPoolException" 4 times.(Áüö‡8ĞÿşÜ‰-
+squid:S00116"[Rename this field "INSERT_STATEMENT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü½®‡úÿÿÿÿ8Ãòº±‰-
+usquid:S1192K"WDefine a constant instead of duplicating this literal "SQLException exception" 5 times.(¥¢×8Ï—³€‹-

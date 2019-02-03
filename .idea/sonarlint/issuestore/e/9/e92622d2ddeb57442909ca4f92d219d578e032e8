@@ -1,0 +1,20 @@
+
+jsquid:CommentedOutCodeLine¥"<This block of commented-out lines of code should be removed.(‹€†ê8•î¹íŠ-
+Nsquid:EmptyStatementUsageCheckŽ"Remove this empty statement.(”®¿î8ãûÎíŠ-
+usquid:S1192D"WDefine a constant instead of duplicating this literal "SQLException exception" 8 times.(”®¿î8¾šÏíŠ-
+Msquid:EmptyStatementUsageCheckG"Remove this empty statement.(”®¿î8éîÏíŠ-
+Msquid:EmptyStatementUsageCheck["Remove this empty statement.(”®¿î8ó¿ÏíŠ-
+jsquid:CommentedOutCodeLine”"<This block of commented-out lines of code should be removed.(åÏóÑ8•î¹íŠ-
+Nsquid:EmptyStatementUsageCheck‹"Remove this empty statement.(”®¿î8ãûÎíŠ-
+Msquid:EmptyStatementUsageCheckD"Remove this empty statement.(”®¿î8éîÏíŠ-
+asquid:S2147F"DCombine this catch with the one at line 67, which has the same body.(Åç_8éîÏíŠ-
+Msquid:EmptyStatementUsageCheck^"Remove this empty statement.(”®¿î8ó¿ÏíŠ-
+Msquid:EmptyStatementUsageCheckt"Remove this empty statement.(”®¿î8¾šÏíŠ-
+Msquid:EmptyStatementUsageCheckw"Remove this empty statement.(”®¿î8¾šÏíŠ-
+msquid:S1192E"JDefine a constant instead of duplicating this literal "Exception" 8 times.(Ž—»ìýÿÿÿÿ8éîÏíŠ-
+asquid:S2147]"DCombine this catch with the one at line 90, which has the same body.(Åç_8ó¿ÏíŠ-
+csquid:S2147"ECombine this catch with the one at line 138, which has the same body.(Åç_8ãûÎíŠ-
+ksquid:S2095"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ù«ÆÃùÿÿÿÿ8Àç°íŠ-
+jsquid:S1301Æ"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8õØÎíŠ-
+Nsquid:S2695€"/This "PreparedStatement" only has 1 parameters.(õ´Íö8Àç°íŠ-
+bsquid:S2147v"ECombine this catch with the one at line 115, which has the same body.(Åç_8¾šÏíŠ-

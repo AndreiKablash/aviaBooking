@@ -1,0 +1,13 @@
+
+Msquid:EmptyStatementUsageCheckM"Remove this empty statement.(”®¿î8ªóÇéŠ-
+"squid:SwitchLastCaseIsDefaultCheck‚"YComplete cases by adding the missing enum constants or add a default case to this switch.(ìè²ë8º†ÜéŠ-
+Msquid:EmptyStatementUsageCheck6"Remove this empty statement.(”®¿î8ı§ÈéŠ-
+asquid:S21475"DCombine this catch with the one at line 50, which has the same body.(Åç_8ı§ÈéŠ-
+asquid:S2147_"DCombine this catch with the one at line 92, which has the same body.(Åç_8ôîƒêŠ-
+Msquid:EmptyStatementUsageCheck3"Remove this empty statement.(”®¿î8ı§ÈéŠ-
+asquid:S2147L"DCombine this catch with the one at line 73, which has the same body.(Åç_8ªóÇéŠ-
+usquid:S11923"WDefine a constant instead of duplicating this literal "SQLException exception" 8 times.(”®¿î8ªóÇéŠ-
+Msquid:EmptyStatementUsageCheckJ"Remove this empty statement.(”®¿î8ªóÇéŠ-
+jsquid:S1301‚"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8º†ÜéŠ-
+esquid:S1126‹"AReplace this if-then-else statement by a single return statement.(Üı£Œùÿÿÿÿ8ŒãïéŠ-
+msquid:S11924"JDefine a constant instead of duplicating this literal "Exception" 6 times.(—»ìıÿÿÿÿ8ı§ÈéŠ-

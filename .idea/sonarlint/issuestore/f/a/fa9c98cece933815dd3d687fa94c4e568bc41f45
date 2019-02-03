@@ -1,0 +1,4 @@
+
+ysquid:S1450"VRemove the "context" field and declare it as a local variable in the relevant methods.(תאפûÿÿÿÿ8נ±ֶ׃‰-
+squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶מ8נ±ֶ׃‰-
+Nsquid:S1068"+Remove this unused "context" private field.(תאפûÿÿÿÿ8נ±ֶ׃‰-

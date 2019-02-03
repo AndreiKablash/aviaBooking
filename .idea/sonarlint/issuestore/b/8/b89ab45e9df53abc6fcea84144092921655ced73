@@ -1,0 +1,14 @@
+
+gsquid:CommentedOutCodeLineY"<This block of commented-out lines of code should be removed.(™¼ñÍþÿÿÿÿ
+gsquid:CommentedOutCodeLine_"<This block of commented-out lines of code should be removed.(®…»…úÿÿÿÿ
+Usquid:S1068"9Remove this unused "PASSPORT_ID_ATTRIBUTE" private field.(ÝìË˜øÿÿÿÿ
+Esquid:S1068")Remove this unused "EMAIL" private field.(þªçýüÿÿÿÿ
+Nsquid:S1068"8Remove this unused "SECONDNAME_ATTRIBUTE" private field.(­Éë
+msquid:S2068"V'PASSWORD' detected in this expression, review this potentially hard-coded credential.(ÇÏ±‰
+gsquid:CommentedOutCodeLineU"<This block of commented-out lines of code should be removed.(®…»…úÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¹»ÿ¦ùÿÿÿÿ
+gsquid:CommentedOutCodeLineH"<This block of commented-out lines of code should be removed.(¬×Þàýÿÿÿÿ
+bsquid:CommentedOutCodeLine="<This block of commented-out lines of code should be removed.(°ðÿ½
+Isquid:S1068"-Remove this unused "USER_ROLE" private field.(ºŽÕ¶øÿÿÿÿ
+Nsquid:S1068"2Remove this unused "NAME_ATTRIBUTE" private field.(±¨Ö„ûÿÿÿÿ
+Lsquid:S1068"5Remove this unused "SURNAME_ATTRIBUTE" private field.(ú–Û
