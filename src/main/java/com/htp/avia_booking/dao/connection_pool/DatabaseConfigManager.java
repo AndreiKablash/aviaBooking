@@ -2,9 +2,7 @@ package com.htp.avia_booking.dao.connection_pool;
 
 import java.util.ResourceBundle;
 
-/**
- * The class for basic settings of the property file for the database connection
- */
+
 public class DatabaseConfigManager {
     private static DatabaseConfigManager instance;
     private ResourceBundle resourceBundle;

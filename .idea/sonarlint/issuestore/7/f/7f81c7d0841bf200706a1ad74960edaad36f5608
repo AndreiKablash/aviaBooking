@@ -1,2 +1,5 @@
 
-isquid:S1301T"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8’ÑîÒŠ-
+isquid:S1301;"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8‹€à¬‹-
+Lsquid:EmptyStatementUsageCheck]"Remove this empty statement.(Ã”¿8‹€à¬‹-
+ksquid:UnusedPrivateMethodM":Remove this unused private "getPlacesByAircraftId" method.(ŸûêÜøÿÿÿÿ8‹€à¬‹-
+nsquid:CommentedOutCodeLine0"<This block of commented-out lines of code should be removed.(ùŞçÜøÿÿÿÿ8‹€à¬‹-

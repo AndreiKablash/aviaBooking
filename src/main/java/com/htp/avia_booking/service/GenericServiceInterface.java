@@ -1,7 +1,6 @@
 package com.htp.avia_booking.service;
 
-import com.google.protobuf.ServiceException;
-import com.htp.avia_booking.domain.objects.User;
+
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface GenericServiceInterface<TO> {
      * @return {@link TO} object, that method can create
      * @throws ServiceException
      */
-    User create(TO entity) throws ServiceException;
+    TO create(TO entity) throws ServiceException;
 
     /**
      * Method provides viewing all information and package this information in view object
@@ -29,5 +28,8 @@ public interface GenericServiceInterface<TO> {
      * @throws ServiceException
      */
     List<TO> loadAll() throws ServiceException;
+
+
+    TO update(TO entity) throws ServiceException;
 
 }

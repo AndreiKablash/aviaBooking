@@ -14,12 +14,13 @@ import java.util.List;
 public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
 
     protected static final ConnectionPool pool = ConnectionPool.getInstance();
-    protected int INTERVAL = 1;// used to set time interval in 1 day
+    protected Logger LOGGER = Logger.getLogger(String.valueOf(this.getClass()));
+    protected int TWENTY_FOUR_HOURS_SEARCH_INTERVAL = 1;// used to set time interval for search in 1 day
     protected String TABLE_NAME_TEMP = "<%table_name%>";
     protected String GET_BY_ID = "SELECT * FROM <%table_name%> WHERE id = ?";
     protected String GET_ALL = "SELECT * FROM <%table_name%>";
+    protected String GET_ALL_ENTITIES_BY_NAME = "SELECT * FROM <%table_name%> where name = ?";
     protected String DELETE_BY_ID = "DELETE FROM <%table_name%> WHERE id = ?";
-    protected Logger LOGGER = Logger.getLogger(String.valueOf(this.getClass()));
     protected String INSERT_STATEMENT = null;
     protected String UPDATE_STATEMENT = null;
 
@@ -36,7 +37,7 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
         ResultSet rs = null;
         T entity;
         try (Connection connect = pool.getConnection();
-             PreparedStatement statement = connect.prepareStatement(sqlStatement);) {
+             PreparedStatement statement = connect.prepareStatement(sqlStatement)) {
             statement.setLong(1, id);
             rs = statement.executeQuery();
             if (rs.next()) {
@@ -56,7 +57,7 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    LOGGER.error("SQLException exception", ex);
+                    LOGGER.error("SQLException", ex);
                 }
             }
         }
@@ -72,7 +73,7 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
     public List<T> getAll() throws DaoException {
         String sqlStatement = this.GET_ALL.replace(TABLE_NAME_TEMP, this.getTableName());
         ResultSet rs = null;
-        ArrayList<T> entityList = new ArrayList<>();
+        List<T> entityList = new ArrayList<>();
         try (Connection connect = pool.getConnection();
              PreparedStatement statement = connect.prepareStatement(sqlStatement)) {
             rs = statement.executeQuery();
@@ -80,17 +81,54 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
                 entityList.add(fillEntity(rs));
             }
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("SQLException in getAll method", ex);
             throw new DaoException("Exception", ex);
         } catch (ConnectionPoolException ex) {
-            LOGGER.error("ConnectionPoolException", ex);
+            LOGGER.error("ConnectionPoolException in getAll method", ex);
             throw new DaoException("Exception", ex);
         }finally{
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    LOGGER.error("SQLException exception", ex);
+                    LOGGER.error("SQLException", ex);
+                }
+            }
+
+        }
+        return entityList;
+    }
+
+    /**
+     * Method find node from database by identification number
+     *
+     * @param name - value of field name in database
+     * @returnList {@link T} all nodes in database
+     * @throws DaoException
+     */
+    public List<T> getByName(String name) throws DaoException {
+        String sqlStatement = this.GET_ALL_ENTITIES_BY_NAME.replace(TABLE_NAME_TEMP, this.getTableName());
+        ResultSet rs = null;
+        List<T> entityList = new ArrayList<>();
+        try (Connection connect = pool.getConnection();
+             PreparedStatement statement = connect.prepareStatement(sqlStatement)) {
+            statement.setString(1, name);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                entityList.add(fillEntity(rs));
+            }
+        } catch (SQLException ex) {
+            LOGGER.error("SQLException in getByName method", ex);
+            throw new DaoException("Exception", ex);
+        } catch (ConnectionPoolException ex) {
+            LOGGER.error("ConnectionPoolException in getByName method", ex);
+            throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
                 }
             }
 
@@ -114,10 +152,10 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
             statement.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("SQLException in delete method", ex);
             throw new DaoException("Exception", ex);
         } catch (ConnectionPoolException ex) {
-            LOGGER.error("ConnectionPoolException", ex);
+            LOGGER.error("ConnectionPoolException in delete method", ex);
             throw new DaoException("Exception", ex);
         }
     }
@@ -143,17 +181,17 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
             rs.next();
             return rs.getLong(1);
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("SQLException in crete method", ex);
             throw new DaoException("Exception", ex);
         } catch (ConnectionPoolException ex) {
-            LOGGER.error("ConnectionPoolException", ex);
+            LOGGER.error("ConnectionPoolException in crete method", ex);
             throw new DaoException("Exception", ex);
         } finally {
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    LOGGER.error("SQLException exception", ex);
+                    LOGGER.error("SQLException", ex);
                 }
             }
         }
@@ -175,14 +213,19 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
             statement.executeUpdate();
             return entity.getId();
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("SQLException in update method", ex);
             throw new DaoException("Exception", ex);
         } catch (ConnectionPoolException ex) {
-            LOGGER.error("ConnectionPoolException", ex);
+            LOGGER.error("ConnectionPoolException in update method", ex);
             throw new DaoException("Exception", ex);
         }
     }
 
+    /**
+     * Method to set HOUR_OF_DAY, MINUTE, SECOND, MILLISECOND to search in 24-hours interval
+     *
+     * @param c object of Calendar
+     */
     protected void clearTime(Calendar c) {
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -198,13 +241,22 @@ public abstract class AbstractDAO<T extends Entity> implements GenericDAO<T> {
     protected abstract String getTableName();
 
     /**
-     * Method to fill entity with
+     * Method to fill T object with all information from database
      *
-     * @param resultSet with
+     * @param resultSet with information from database
      * @return T object with all identification information
      * @throws SQLException
      */
     protected abstract T fillEntity(ResultSet resultSet) throws SQLException, DaoException;
 
+
+    /**
+     * Abstract utility method update and create methods should be overridden
+     *
+     * @param preparedStatement
+     * @param entity of T object
+     * @param operation
+     * @throws SQLException
+     */
     protected abstract void populateParameters(PreparedStatement preparedStatement, T entity, DBOperation operation) throws SQLException;
 }

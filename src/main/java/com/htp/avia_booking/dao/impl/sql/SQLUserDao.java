@@ -17,29 +17,20 @@ import java.util.List;
 
 public class SQLUserDao extends AbstractDAO<User> implements UserDao {
 
-    private static final String SELECT_SPECIFIC_USER = "SELECT login,document_id FROM avia.user " +
-            "WHERE login = ? OR document_id = ?";
-    private static final String FIND_ROLES_BY_USERS_ID = "SELECT role.id, role.name,role.description " +
-            "FROM avia.user_to_role " +
-            "inner JOIN avia.role ON avia.user_to_role.role_id = role.id" +
-            "WHERE user_to_role.user_id = ?";
+    private static final String SELECT_SPECIFIC_USER_BY_LOGIN_AND_PASSWORD = "SELECT u.* FROM avia.user u" +
+            " WHERE u.login = ? AND u.password = ?";
+    private static final String FIND_ROLES_BY_USERS_ID = "Select s.* from avia.user_to_role r  " +
+            "inner join avia.source_role s on s.id = r.role_id where r.user_id = ?";
 
-
-    private static final String GET_USER_RECORD = "SELECT name, passenger.surname," +
-            "passenger.document_id, passenger.email, passenger.login, passenger.password, passenger.phone, role.name" +
-            "role.description"
-            + "FROM avia.passenger LEFT OUTER JOIN avia.user_to_role ON passenger.id = user_to_role.user_id "
-            + "LEFT OUTER JOIN avia.role ON user_to_role.user_id = role.name"
-            + "WHERE passenger.id = ? ";
+    private static final String GET_USER_RECORD_BY_LOGIN_PASSWORD= "SELECT u.* FROM avia.user u " +
+            "inner join avia.user_to_role r on u.id = r.user_id WHERE u.login = ? and u.password = ?";
 
     public SQLUserDao() {
-        this.INSERT_STATEMENT  = "INSERT INTO avia.user(name, surname, document_id, email, login, " +
+        this.INSERT_STATEMENT  = "INSERT INTO <%table_name%>(name, surname, document_id, email, login, " +
                 "password, phone) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        this.UPDATE_STATEMENT = "UPDATE avia.user SET surname =?, document_id=?, email = ?, phone=? WHERE id = ?";
-        this.GET_BY_ID = "SELECT avia.user.*, avia.source_role.* FROM avia.user_to_role utr" +
-                "INNER JOIN avia.user ON avia.user.id = utr.user_id" +
-                "INNER JOIN avia.source_role ON utr.role_id = avia.source_role.id" +
-                "WHERE avia.user.id = ?";
+        this.UPDATE_STATEMENT = "UPDATE <%table_name%> SET surname =?, document_id=?, email = ?, phone=? WHERE id = ?";
+        this.GET_BY_ID = "SELECT  us.* FROM <%table_name%> us inner join user_to_role r on r.user_id=us.id WHERE r.user_id = ?";
+        this.GET_ALL = "SELECT  us.* FROM <%table_name%> us inner join user_to_role r on r.user_id=us.id;";
     }
 
     public static UserDao getInstance() {
@@ -50,85 +41,101 @@ public class SQLUserDao extends AbstractDAO<User> implements UserDao {
         private static final UserDao instance = new SQLUserDao();
     }
 
-    /**
-     * Method to check user record in database by login and document_id
-     * @param user client object, that necessary checks in database
-     * @return true if the user is in database, else false
-     * @throws DaoException there are errors while reading from database
-     */
     @Override
     public boolean checkUser(User user) throws DaoException {
+        ResultSet rs = null;
+        boolean result;
         try (Connection connect = pool.getConnection();
-             PreparedStatement statement = connect.prepareStatement(SELECT_SPECIFIC_USER);
-             ResultSet rs = statement.executeQuery()) {
+             PreparedStatement statement = connect.prepareStatement(SELECT_SPECIFIC_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, user.getLogin());
-            statement.setString(2, user.getDocumentId());
-            return rs.next();
+            statement.setString(2, user.getPassword());
+            rs = statement.executeQuery();
+            result = rs.first();
+            return result;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);
             throw new DaoException("Exception", ex);
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
-
-    /**
-     * Method to check user in database by identification number
-     * @param id  unique identification number of user
-     * @return true if the user is in database, else false
-     * @throws DaoException there are errors while reading from database
-     */
 
     @Override
     public boolean checkUserById(long id) throws DaoException {
+        ResultSet rs = null;
         try (Connection connect = pool.getConnection();
-             PreparedStatement statement = connect.prepareStatement(GET_BY_ID);
-             ResultSet rs = statement.executeQuery()) {
+             PreparedStatement statement = connect.prepareStatement(GET_BY_ID)) {
             statement.setLong(1, id);
+            rs = statement.executeQuery();
             return rs.next();
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException ", ex);
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
-
 
     //method to find passengers role in database by passenger id
-    public List<Role> findRolesById(long userId) throws DaoException {
+    private List<Role> findRolesById(long userId) throws DaoException {
+        ResultSet rs = null;
+        List<Role> roleList = new ArrayList<>();
         try (Connection connect = pool.getConnection();
-             PreparedStatement statement = connect.prepareStatement(FIND_ROLES_BY_USERS_ID);
-             ResultSet set = statement.executeQuery()) {
+             PreparedStatement statement = connect.prepareStatement(FIND_ROLES_BY_USERS_ID)) {
             statement.setLong(1, userId);
-            List<Role> roles = new ArrayList<>();
-            if (set.next()) {
+            rs = statement.executeQuery();
+            if (rs.next()) {
                 Role role = new Role();
-                role.setId(set.getLong("id"));
-                role.setName(set.getString("name"));
-                role.setDescription(set.getString("description"));
-                roles.add(role);
+                role.setId(rs.getLong("id"));
+                role.setName(rs.getString("name"));
+                role.setDescription(rs.getString("description"));
+                roleList.add(role);
             }
-            return roles;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);;
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);;
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
+        return roleList;
     }
+
     @Override
     public User getUserRecord(String login, String password) throws DaoException {
+        ResultSet rs = null;
+        User user;
         try(Connection connect = pool.getConnection();
-            PreparedStatement statement = connect.prepareStatement(GET_USER_RECORD)) {
+            PreparedStatement statement = connect.prepareStatement(GET_USER_RECORD_BY_LOGIN_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            User user;
+            rs = statement.executeQuery();
             if (rs.next()) {
                 user = fillEntity(rs);
                 return user;
@@ -136,40 +143,21 @@ public class SQLUserDao extends AbstractDAO<User> implements UserDao {
                 return null;
             }
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
-
-//    @Override
-//    public Long create(User user) throws DaoException {
-//        try (Connection connect = pool.getConnection();
-//             PreparedStatement statement = connect.prepareStatement(INSERT_STATEMENT);
-//             PreparedStatement statementNew = connect.prepareStatement(INSERT_ROLE);
-//             PreparedStatement statementThird = connect.prepareStatement(LAST_INSERT_ID)) {
-//            connect.setAutoCommit(false);
-//            statement.setString(1, user.getName());
-//            statement.setString(2, user.getSurname());
-//            statement.setString(3, user.getEmail());
-//            statement.setString(4, user.getDocumentId());
-//            statement.executeUpdate();
-//            connect.commit();
-//            statementNew.setString(1, user.getLogin());
-//            statementNew.setString(2, user.getPassword());
-//            statementNew.executeUpdate();
-//            connect.commit();
-//
-//            ResultSet set = statementThird.executeQuery();
-//            set.next();
-//            return Long.valueOf(set.getInt(LAST_ID));
-//        } catch (SQLException | ConnectionPoolException e) {
-//            throw new DaoException("Exception", e);
-//        }
-//    }
-
 
     @Override
     protected String getTableName() {
@@ -208,7 +196,7 @@ public class SQLUserDao extends AbstractDAO<User> implements UserDao {
             case UPDATE:
                 preparedStatement.setString(1, entity.getEmail());
                 preparedStatement.setString(2, entity.getDocumentId());
-                preparedStatement.setLong(3, entity.getId());
+                preparedStatement.setString(3, entity.getPhone());
         }
     }
 }

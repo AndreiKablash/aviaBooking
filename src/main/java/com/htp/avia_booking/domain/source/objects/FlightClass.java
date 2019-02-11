@@ -2,6 +2,8 @@ package com.htp.avia_booking.domain.source.objects;
 
 import com.htp.avia_booking.domain.Entity;
 
+import java.util.Objects;
+
 public class FlightClass extends Entity {
 
     private String name;
@@ -31,4 +33,25 @@ public class FlightClass extends Entity {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FlightClass that = (FlightClass) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description);
+    }
+
+    @Override
+    public String toString() {
+        return "FlightClass{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

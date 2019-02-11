@@ -1,6 +1,7 @@
 package com.htp.avia_booking.dao.impl.sql;
 
 import com.htp.avia_booking.dao.AbstractDAO;
+import com.htp.avia_booking.dao.DaoException;
 import com.htp.avia_booking.dao.interfaces.RoleDao;
 import com.htp.avia_booking.domain.source.objects.Role;
 import com.htp.avia_booking.enums.DBOperation;
@@ -8,6 +9,7 @@ import com.htp.avia_booking.enums.DBOperation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class SQLRoleDao extends AbstractDAO<Role> implements RoleDao {
 
@@ -47,13 +49,13 @@ public class SQLRoleDao extends AbstractDAO<Role> implements RoleDao {
         return role;
     }
 
-    /**
-     * Method to get table name
-     *
-     * @return string with table name in database
-     */
     @Override
     protected String getTableName() {
         return "avia.source_role";
+    }
+
+    @Override
+    public List<Role> getByName(String name) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

@@ -10,6 +10,8 @@ import java.util.Objects;
 public class Flight extends Entity {
 
     private String duration; //being absent in dataBase, used for output of date format information
+    private boolean existFreePlaces;
+
     private String code;
     private Calendar dateDepart;
     private Calendar dateArrival;
@@ -23,6 +25,22 @@ public class Flight extends Entity {
 
     public Flight(long id) {
         super(id);
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public boolean isExistFreePlaces() {
+        return existFreePlaces;
+    }
+
+    public void setExistFreePlaces(boolean existFreePlaces) {
+        this.existFreePlaces = existFreePlaces;
     }
 
     public String getCode() {
@@ -73,12 +91,37 @@ public class Flight extends Entity {
         this.cityTo = cityTo;
     }
 
-    public String getDuration() {
-        return duration;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return existFreePlaces == flight.existFreePlaces &&
+                Objects.equals(duration, flight.duration) &&
+                Objects.equals(code, flight.code) &&
+                Objects.equals(dateDepart, flight.dateDepart) &&
+                Objects.equals(dateArrival, flight.dateArrival) &&
+                Objects.equals(aircraft, flight.aircraft) &&
+                Objects.equals(cityFrom, flight.cityFrom) &&
+                Objects.equals(cityTo, flight.cityTo);
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    @Override
+    public int hashCode() {
+        return Objects.hash(duration, existFreePlaces, code, dateDepart, dateArrival, aircraft, cityFrom, cityTo);
     }
 
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "duration='" + duration + '\'' +
+                ", existFreePlaces=" + existFreePlaces +
+                ", code='" + code + '\'' +
+                ", dateDepart=" + dateDepart +
+                ", dateArrival=" + dateArrival +
+                ", aircraft=" + aircraft +
+                ", cityFrom=" + cityFrom +
+                ", cityTo=" + cityTo +
+                '}';
+    }
 }

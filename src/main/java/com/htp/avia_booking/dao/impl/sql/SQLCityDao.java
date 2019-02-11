@@ -16,11 +16,6 @@ public class SQLCityDao extends AbstractDAO<City> implements CityDao {
         this.INSERT_STATEMENT = "INSERT INTO <%table_name%>(name,code,country_id,description)" +
                 " VALUES (?,?,?,?)";
         this.UPDATE_STATEMENT = "UPDATE <%table_name%> SET name =?, code = ?,description =?, WHERE id = ?";
-        this.GET_BY_ID ="SELECT ci.id,ci.code,ci.description,co.name as country,co.code,co.icon from <%table_name%> ci" +
-                "inner join avia.source_country co on ci.country_id = co.id" +
-                "where ci.id=?;";
-        this.GET_ALL = "SELECT ci.id,ci.code,ci.description,co.name as country,co.code,co.icon from <%table_name%> ci" +
-        "inner join avia.source_country co on ci.country_id = co.id";
     }
 
     public static CityDao getInstance() {
@@ -33,7 +28,7 @@ public class SQLCityDao extends AbstractDAO<City> implements CityDao {
 
     @Override
     protected String getTableName() {
-        return "<%table_name%>";
+        return "avia.source_city";
     }
 
     @Override
@@ -45,7 +40,7 @@ public class SQLCityDao extends AbstractDAO<City> implements CityDao {
         try {
             city.setCountry(SQLCountryDao.getInstance().getById(resultSet.getLong("country_id")));
         } catch (DaoException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("SQLException", ex);
         }
         city.setDescription(resultSet.getString("description"));
         return city;

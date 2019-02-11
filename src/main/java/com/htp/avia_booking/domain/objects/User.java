@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class User extends Entity {
+
     private String name;
     private String surname;
     private String documentId;
@@ -90,5 +91,39 @@ public class User extends Entity {
     public void setRole(List<Role> role) {
         if (role != null)
             this.role.addAll(role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(documentId, user.documentId) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(role, user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, documentId, email, login, password, phone, role);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", documentId='" + documentId + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

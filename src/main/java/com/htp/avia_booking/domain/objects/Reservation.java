@@ -4,6 +4,7 @@ import com.htp.avia_booking.domain.Entity;
 import com.htp.avia_booking.domain.source.objects.Place;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Reservation extends Entity {
 
@@ -68,5 +69,35 @@ public class Reservation extends Entity {
 
     public void setAddInfo(String addInfo) {
         this.addInfo = addInfo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(flight, that.flight) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(place, that.place) &&
+                Objects.equals(code, that.code) &&
+                Objects.equals(reserveDateTime, that.reserveDateTime) &&
+                Objects.equals(addInfo, that.addInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(flight, user, place, code, reserveDateTime, addInfo);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "flight=" + flight +
+                ", user=" + user +
+                ", place=" + place +
+                ", code='" + code + '\'' +
+                ", reserveDateTime=" + reserveDateTime +
+                ", addInfo='" + addInfo + '\'' +
+                '}';
     }
 }

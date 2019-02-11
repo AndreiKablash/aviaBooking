@@ -1,6 +1,2 @@
 
-usquid:S1192I"WDefine a constant instead of duplicating this literal "SQLException exception" 3 times.(¥¢×8ÚŠÍíŠ-
-Rsquid:EmptyStatementUsageCheckJ"Remove this empty statement.(Åñ­õşÿÿÿÿ8ÚŠÍíŠ-
-jsquid:S1301ˆ"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8‡¤‹ÚŠ-
-asquid:S2147L"DCombine this catch with the one at line 72, which has the same body.(Åç_8ÚŠÍíŠ-
-Rsquid:EmptyStatementUsageCheckN"Remove this empty statement.(Åñ­õşÿÿÿÿ8ÚŠÍíŠ-
+gsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8‡¤‹ÚŠ-

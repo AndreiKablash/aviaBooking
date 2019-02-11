@@ -1,4 +1,2 @@
 
-·%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.htp.avia_booking.exception.NoSuchEntityException' which is a runtime exception.(Ë®ÂÎ8¿Ÿ²‰-
-Bsquid:S1168C"+Return an empty collection instead of null.(¥¹ï
-Bsquid:S1168e"+Return an empty collection instead of null.(¥¹ï
+psquid:S1192:"RDefine a constant instead of duplicating this literal "Service Exception" 7 times.(Ë‚òû8İœ˜Ò‹-

@@ -4,6 +4,8 @@ import com.htp.avia_booking.dao.DaoException;
 import com.htp.avia_booking.dao.GenericDAO;
 import com.htp.avia_booking.domain.source.objects.Place;
 
+import java.util.List;
+
 public interface PlaceDao extends GenericDAO<Place> {
 
 //    boolean checkPlace(Place place) throws DaoException;
@@ -14,5 +16,5 @@ public interface PlaceDao extends GenericDAO<Place> {
 
     Place getPlaceByAircraftID(long aircraftId) throws DaoException;
 
-    boolean getPlaceBusy(long aircraftId, long flightId) throws DaoException;
+    List<Place> getPlaceBusy(long aircraftId, long flightId) throws DaoException;
 }

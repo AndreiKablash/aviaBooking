@@ -1,45 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="WebApp_ID" version="2.5">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
-<welcome-file-list>
+    <display-name>AviaBooking</display-name>
+
+    <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
         <welcome-file>index.jsp</welcome-file>
         <welcome-file>default.html</welcome-file>
         <welcome-file>default.htm</welcome-file>
         <welcome-file>default.jsp</welcome-file>
-
     </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/WEB-INF/jsp/error/error.jsp</location>
+    </error-page>
+
+
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+        </jsp-property-group>
+    </jsp-config>
+
+
+
     <listener>
         <listener-class>
             com.htp.avia_booking.listener.ConnectPoolListener
         </listener-class>
     </listener>
 
-    <!-- jsp page example -->
+
     <servlet>
-        <servlet-name>admin</servlet-name>
-        <jsp-file>/WEB-INF/jsp/admin/admin.jsp</jsp-file>
+        <servlet-name>Register</servlet-name>
+        <jsp-file>/WEB-INF/jsp/util/register.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>admin</servlet-name>
-        <url-pattern>/admin</url-pattern>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>FrontController</servlet-name>
-	<servlet-class>com.htp.avia_booking.controller.FrontController</servlet-class>
+        <servlet-name>Login</servlet-name>
+        <jsp-file>/WEB-INF/jsp/util/login.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FrontController</servlet-name>
-        <url-pattern>/FrontController</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-    <session-config>
-        <session-timeout>10</session-timeout>
-    </session-config>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <jsp-file>/WEB-INF/jsp/util/logout.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/user/user_application_view.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserView</servlet-name>
+        <url-pattern>/userPageView</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminView</servlet-name>
+        <jsp-file>/WEB-INF/jsp/admin/admin_application_view.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminView</servlet-name>
+        <url-pattern>/adminPageView</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminViewAllUsers</servlet-name>
+        <jsp-file>WEB-INF/jsp/admin/admin_view_users.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminViewAllUsers</servlet-name>
+        <url-pattern>/adminAllUsersView</url-pattern>
+    </servlet-mapping>
 
     <!-- Filters -->
     <filter>
@@ -55,6 +125,7 @@
         <filter-name>CharsetFilter</filter-name>
         <url-pattern>/FrontController</url-pattern>
     </filter-mapping>
+
 
     <filter>
         <display-name>UserSecurityFilter</display-name>

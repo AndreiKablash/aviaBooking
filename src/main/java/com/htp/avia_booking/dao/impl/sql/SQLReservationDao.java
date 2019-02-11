@@ -43,62 +43,87 @@ public class SQLReservationDao extends AbstractDAO<Reservation> implements Reser
     @Override
     public Reservation getReservationByDocumentNumber(String document_id) throws DaoException {
         Reservation  reservation = null;
+        ResultSet rs = null;
         try(Connection connect = pool.getConnection();
-            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_USER_DOCUMENT_ID);
-            ResultSet rs = statement.executeQuery()){
+            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_USER_DOCUMENT_ID)){
             statement.setString(1,document_id);
+            rs = statement.executeQuery();
             while (rs.next()) {
                  reservation= fillEntity(rs);
             }
             return reservation;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);;
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);;
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
-
-
 
     @Override
     public Reservation getReservationBySurname(String surname) throws DaoException {
         Reservation  reservation = null;
+        ResultSet rs = null;
         try(Connection connect = pool.getConnection();
-            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_USER_SURNAME);
-            ResultSet rs = statement.executeQuery()){
+            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_USER_SURNAME)){
             statement.setString(1,surname);
+            rs = statement.executeQuery();
             while (rs.next()) {
                 reservation= fillEntity(rs);
             }
             return reservation;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);;
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);;
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
 
     @Override
     public Reservation getReservationByCode(String code) throws DaoException {
         Reservation  reservation = null;
+        ResultSet rs =null;
         try(Connection connect = pool.getConnection();
-            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_RESERVATION_CODE);
-            ResultSet rs = statement.executeQuery()){
+            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_RESERVATION_CODE)){
             statement.setString(1,code);
+            rs = statement.executeQuery();
             while (rs.next()) {
                 reservation= fillEntity(rs);
             }
             return reservation;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);;
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);;
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
 
@@ -106,27 +131,36 @@ public class SQLReservationDao extends AbstractDAO<Reservation> implements Reser
     @Override
     public Reservation getReservationByDateReserve(Calendar dateReservation) throws DaoException {
         Reservation  reservation = null;
+        ResultSet rs = null;
         // set hours, minute, second, millisecond by zero to search all flight in 24 hours
         clearTime(dateReservation);
         // in which interval to search for (by default - 24 hours)
         Calendar dateTimeInterval = (Calendar) (dateReservation.clone());
-        dateTimeInterval.add(Calendar.DATE, INTERVAL);
+        dateTimeInterval.add(Calendar.DATE, TWENTY_FOUR_HOURS_SEARCH_INTERVAL);
 
         try(Connection connect = pool.getConnection();
-            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_RESERVATION_DATE);
-            ResultSet rs = statement.executeQuery()){
+            PreparedStatement statement = connect.prepareStatement(SELECT_RESERVATION_BY_RESERVATION_DATE)){
             statement.setLong(1, dateReservation.getTimeInMillis());
             statement.setLong(2, dateTimeInterval.getTimeInMillis());
+            rs = statement.executeQuery();
             while (rs.next()) {
                 reservation= fillEntity(rs);
             }
             return reservation;
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("SQLException", ex);;
             throw new DaoException("Exception", ex);
         }catch (ConnectionPoolException ex){
-            LOGGER.error("SQLException exception", ex);;
+            LOGGER.error("ConnectionPoolException", ex);;
             throw new DaoException("Exception", ex);
+        }finally{
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
     }
 
@@ -162,6 +196,8 @@ public class SQLReservationDao extends AbstractDAO<Reservation> implements Reser
                 preparedStatement.setLong(5, entity.getReserveDateTime().getTimeInMillis());
                 preparedStatement.setString(6, entity.getAddInfo());
                 break;
+            case UPDATE:
+                throw new UnsupportedOperationException();
         }
     }
 }

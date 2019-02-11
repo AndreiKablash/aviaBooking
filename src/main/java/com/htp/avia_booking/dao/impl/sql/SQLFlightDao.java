@@ -5,7 +5,9 @@ import com.htp.avia_booking.dao.DaoException;
 import com.htp.avia_booking.dao.connection_pool.ConnectionPoolException;
 import com.htp.avia_booking.dao.interfaces.FlightDao;
 import com.htp.avia_booking.domain.objects.Flight;
+import com.htp.avia_booking.domain.source.objects.Aircraft;
 import com.htp.avia_booking.domain.source.objects.City;
+import com.htp.avia_booking.domain.source.objects.Place;
 import com.htp.avia_booking.enums.DBOperation;
 import com.htp.avia_booking.util.GMTCalendar;
 
@@ -23,12 +25,13 @@ public class SQLFlightDao extends AbstractDAO<Flight> implements FlightDao {
     private static final String MIN = " мин.";
     private static final String HOUR = " ч.  ";
     private static final String DAY = " д.  ";
-    private static final String GET_SELECTED_FLIGHT = "select * from flight " +
+    private static final String GET_SELECTED_FLIGHT = "select * from avia.flight " +
             "where date_depart>=? and  date_depart<? and city_from_id=? and city_to_id=?";
 
     public SQLFlightDao() {
-        this.INSERT_STATEMENT = " ";
-        this.UPDATE_STATEMENT = " ";
+        this.INSERT_STATEMENT = "INSERT INTO <%table_name%>(code,date_depart,date_arrival,aircraft_id,city_from_id," +
+                "city_to_id) VALUES (?,?,?,?,?,?)";
+        this.UPDATE_STATEMENT = "INSERT INTO <%table_name%>(code,date_depart,date_arrival) VALUES (?,?,?)";
     }
 
     public static FlightDao getInstance() {
@@ -39,44 +42,41 @@ public class SQLFlightDao extends AbstractDAO<Flight> implements FlightDao {
         private static final FlightDao instance = new SQLFlightDao();
     }
 
-    /**
-     * Method to find flight in database by three parameters: date of departure, city of departure, city of arrival
-     *
-     * @param dateTime - day of departure
-     * @param cityFrom - city of departure
-     * @param cityTo   - city of arrival
-     * @return List all flight which are in the database or empty list if no nodes in database
-     * @throws DaoException
-     */
     @Override
     public List<Flight> getFlight(Calendar dateTime, City cityFrom, City cityTo) throws DaoException {
         ArrayList<Flight> flightList = new ArrayList<>();
+        ResultSet rs = null;
         try (Connection connect = pool.getConnection();
-             PreparedStatement statement = connect.prepareStatement(GET_SELECTED_FLIGHT);
-             ResultSet set = statement.executeQuery()) {
+             PreparedStatement statement = connect.prepareStatement(GET_SELECTED_FLIGHT)) {
 
             // set hours, minute, second, millisecond by zero to search all flight in 24 hours
             clearTime(dateTime);
 
             // set time interval for search in 1 day
             Calendar dateTimeInterval = (Calendar) (dateTime.clone());
-            dateTimeInterval.add(Calendar.DATE, INTERVAL);
+            dateTimeInterval.add(Calendar.DATE, TWENTY_FOUR_HOURS_SEARCH_INTERVAL);
             statement.setLong(1, dateTime.getTimeInMillis());
             statement.setLong(2, dateTimeInterval.getTimeInMillis());
             statement.setLong(3, cityFrom.getId());
             statement.setLong(4, cityTo.getId());
-
-            while (set.next()) {
-                flightList.add(fillEntity(set));
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                flightList.add(fillEntity(rs));
             }
         } catch (SQLException ex) {
-            LOGGER.error("SQLException exception", ex);
-            ;
+            LOGGER.error("SQLException", ex);
             throw new DaoException("Exception", ex);
         } catch (ConnectionPoolException ex) {
-            LOGGER.error("SQLException exception", ex);
-            ;
+            LOGGER.error("ConnectionPoolException", ex);
             throw new DaoException("Exception", ex);
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    LOGGER.error("SQLException", ex);
+                }
+            }
         }
         return flightList;
     }
@@ -100,11 +100,24 @@ public class SQLFlightDao extends AbstractDAO<Flight> implements FlightDao {
         flight.setDateDepart(dateDepart);
         flight.setDateArrival(dateCome);
         try {
-            flight.setAircraft(SQLAircraftDao.getInstance().getById(resultSet.getLong("aircraft_id")));
+            Aircraft aircraft = SQLAircraftDao.getInstance().getById(resultSet.getLong("aircraft_id"));
+            flight.setAircraft(aircraft);
+
+            List<Place> placeList = SQLPlaceDao.getInstance().getPlaceBusy(aircraft.getId(), flight.getId());
+            aircraft.setPlaceList(placeList);
+
+            // if there is at least one place
+            for (Place place : placeList) {
+                if (!place.isBusy()){
+                    flight.setExistFreePlaces(true);
+                    break;
+                }
+            }
+
             flight.setCityFrom(SQLCityDao.getInstance().getById(resultSet.getLong("city_from_id")));
             flight.setCityTo(SQLCityDao.getInstance().getById(resultSet.getLong("city_to_id")));
         } catch (DaoException ex) {
-            LOGGER.error("SQLException exception", ex);
+            LOGGER.error("DaoException", ex);
         }
 
         //Used to calculate the duration of flight
@@ -148,5 +161,10 @@ public class SQLFlightDao extends AbstractDAO<Flight> implements FlightDao {
                 preparedStatement.setLong(3, entity.getDateArrival().getTimeInMillis());
                 break;
         }
+    }
+
+    @Override
+    public List<Flight> getByName(String name) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

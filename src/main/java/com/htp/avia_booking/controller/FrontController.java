@@ -1,74 +1,73 @@
 package com.htp.avia_booking.controller;
 
-
-
-import com.htp.avia_booking.controller.util.CommandException;
-import com.htp.avia_booking.controller.util.CommandHelper;
-import com.htp.avia_booking.controller.util.CommandInterface;
+import com.htp.avia_booking.controller.command.CommandException;
+import com.htp.avia_booking.controller.command.CommandHelper;
+import com.htp.avia_booking.controller.command.CommandInterface;
+import com.htp.avia_booking.controller.command.util.ConfigurationManager;
+import com.htp.avia_booking.controller.command.util.MessageManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
-* Performs processing requests from browser and the responses to browser
-*/
+@WebServlet("/controller")
 public class FrontController extends HttpServlet {
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-private static final Logger LOGGER = Logger.getRootLogger();
-private static final String ERROR_PAGE = "/error";
-private static final String ACTION = "action";
-private static final String REDIRECT_ATTRIBUTE = "redirect";
+    private static final Logger LOGGER = Logger.getRootLogger();
+    private static final String ERROR_TAG = "error";
+    private static final String ACTION = "action";
+    private static final String FORWARD_ACTION_ATTRIBUTE = "forward";
 
-private final CommandHelper helper = new CommandHelper();
+    private final CommandHelper helper = new CommandHelper();
+    private final ConfigurationManager MANAGER = ConfigurationManager.getInstance();
+    private final MessageManager MESSAGE = MessageManager.getInstance();
 
-public FrontController() {
-    super();
-}
+    public FrontController() {
+        super();
+    }
 
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doRequest(request, response);
-}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doRequest(request, response);
+    }
 
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doRequest(request, response);
-}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doRequest(request, response);
+    }
 
-/** It determines which team will be carried out and what actions will be implemented
- * during the transition between pages in accordance with the request (forward or sendRedirect)
- * @param request HttpServletRequest
- * @param response HttpServletResponse
- * @throws ServletException
- * @throws IOException
- */
-private void doRequest(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-    String page;
+    private void doRequest(HttpServletRequest request,
+                           HttpServletResponse response) throws ServletException, IOException {
 
-    CommandInterface action = helper.getCommand(request);
+        String page;
 
-    if(action != null) {
-        try {
-            page = action.execute(request, response);
+        CommandInterface action = helper.getCommand(request);
 
-            if((request.getAttribute(ACTION)).equals(REDIRECT_ATTRIBUTE)) {
-                response.sendRedirect(getServletContext().getContextPath() + page);
-            }
-            else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-                if (dispatcher != null) {
-                    dispatcher.forward(request, response);
+        if (action != null) {
+            try {
+                page = action.execute(request, response);
+
+                if (page != null) {
+                    if (request.getAttribute(ACTION).equals(FORWARD_ACTION_ATTRIBUTE)) {
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+                        dispatcher.forward(request, response);
+                    } else {
+                        response.sendRedirect(request.getContextPath() + page);
+                    }
+                } else {
+                    page = MANAGER.getProperty("path.page.index");
+                    request.getSession().setAttribute("nullPage",
+                            MESSAGE.getProperty("message.nullpage"));
+                    response.sendRedirect(request.getContextPath() + page);
                 }
+            } catch (CommandException e) {
+                LOGGER.error("CommandException", e);
+                response.sendRedirect(request.getContextPath() + ERROR_TAG);
             }
-        } catch (CommandException e) {
-            LOGGER.error("CommandException", e);
-            response.sendRedirect(request.getContextPath() + ERROR_PAGE);
         }
     }
-}
 }

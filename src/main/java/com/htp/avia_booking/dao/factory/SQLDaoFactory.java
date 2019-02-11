@@ -2,7 +2,6 @@ package com.htp.avia_booking.dao.factory;
 
 import com.htp.avia_booking.dao.impl.sql.*;
 import com.htp.avia_booking.dao.interfaces.*;
-import com.htp.avia_booking.domain.objects.Reservation;
 
 
 public class SQLDaoFactory extends DaoFactory {

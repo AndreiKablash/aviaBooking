@@ -24,11 +24,6 @@ public class SQLCountryDao extends AbstractDAO<Country> implements CountryDao {
         this.UPDATE_STATEMENT = "UPDATE <%table_name%> SET name =?, code = ? WHERE id = ?";
     }
 
-    /**
-     * Method to get table name
-     *
-     * @return string with table name in database
-     */
     @Override
     protected String getTableName() {
         return "avia.source_country";

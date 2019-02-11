@@ -1,20 +1,0 @@
-
-tsquid:S2068"V'PASSWORD' detected in this expression, review this potentially hard-coded credential.(ÇÏ±‰8ÊÑ¿ˆ‰-
-Lsquid:S1068".Remove this unused "ADMIN_ROLE" private field.(øüŒ¸8×â’Ó‰-
-nsquid:CommentedOutCodeLine="<This block of commented-out lines of code should be removed.(½µÔôøÿÿÿÿ8×â’Ó‰-
-isquid:CommentedOutCodeLineK"<This block of commented-out lines of code should be removed.(Á»¨›8×â’Ó‰-
-isquid:CommentedOutCodeLineI"<This block of commented-out lines of code should be removed.(†ýúƒ8×â’Ó‰-
-Msquid:S1068"/Remove this unused "CLIENT_ROLE" private field.(ûÒë–8×â’Ó‰-
-isquid:CommentedOutCodeLineF"<This block of commented-out lines of code should be removed.(ºñð8×â’Ó‰-
-Qsquid:S1068".Remove this unused "ERROR_FLAG" private field.(ÓòÎ´þÿÿÿÿ8×â’Ó‰-
-isquid:CommentedOutCodeLine]"<This block of commented-out lines of code should be removed.(ýùËÜ8×â’Ó‰-
-Jsquid:S1068",Remove this unused "PASSWORD" private field.(ÇÏ±‰8×â’Ó‰-
-`squid:S1068"=Remove this unused "REDIRECT_ACTION_ATTRIBUTE" private field.(ÍÕœåýÿÿÿÿ8×â’Ó‰-
-Wsquid:S1068"4Remove this unused "ERROR_FLAG_VALUE" private field.(èëÁóþÿÿÿÿ8×â’Ó‰-
-Hsquid:S1068"*Remove this unused "ACTION" private field.(€–Èü8×â’Ó‰-
-isquid:CommentedOutCodeLine?"<This block of commented-out lines of code should be removed.(Æš•·8ÙÑ¿ˆ‰-
-Isquid:S1068"+Remove this unused "SERVICE" private field.(Ö½‹š8×â’Ó‰-
-_squid:S1068"<Remove this unused "FORWARD_ACTION_ATTRIBUTE" private field.(¦ùïãûÿÿÿÿ8×â’Ó‰-
-nsquid:CommentedOutCodeLineT"<This block of commented-out lines of code should be removed.(Šô°ßþÿÿÿÿ8×â’Ó‰-
-nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¹»ÿ¦ùÿÿÿÿ8ÙÑ¿ˆ‰-
-Fsquid:S1068")Remove this unused "LOGIN" private field.(Î„Ä48×â’Ó‰-

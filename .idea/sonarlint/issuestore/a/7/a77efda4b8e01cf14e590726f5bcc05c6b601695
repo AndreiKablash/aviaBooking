@@ -1,0 +1,8 @@
+
+nsquid:CommentedOutCodeLine*"<This block of commented-out lines of code should be removed.(½µÔôøÿÿÿÿ8ãŒ¼ÍŒ-
+tsquid:S2159R"VRemove this call to "equals"; comparisons between unrelated types always return false.(™—‹8ÒÅ¼ÍŒ-
+isquid:CommentedOutCodeLine3"<This block of commented-out lines of code should be removed.(ïÍ²¹8ãŒ¼ÍŒ-
+nsquid:CommentedOutCodeLine6"<This block of commented-out lines of code should be removed.(›€£°þÿÿÿÿ8ãŒ¼ÍŒ-
+isquid:CommentedOutCodeLine-"<This block of commented-out lines of code should be removed.(âÁ¹ó8ãŒ¼ÍŒ-
+msquid:S2068"V'PASSWORD' detected in this expression, review this potentially hard-coded credential.(ÇÏ±‰
+nsquid:CommentedOutCodeLine0"<This block of commented-out lines of code should be removed.(Ä°Àðøÿÿÿÿ8ãŒ¼ÍŒ-

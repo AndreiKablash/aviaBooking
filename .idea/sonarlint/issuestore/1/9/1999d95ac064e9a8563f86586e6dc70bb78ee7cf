@@ -1,22 +1,18 @@
 
-Nsquid:EmptyStatementUsageCheck€"Remove this empty statement.(”®¿î8œ¢ÜìŠ-
-Nsquid:S2695w"+This "PreparedStatement" has no parameters.(±¬Ìúÿÿÿÿ8öğôìŠ-
-…squid:S1192"bDefine a constant instead of duplicating this literal "SELECT * FROM avia.reservation r " 3 times.(ÈÕŞùÿÿÿÿ8ÈüÓìŠ-
-Msquid:EmptyStatementUsageChecka"Remove this empty statement.(”®¿î8ÈüÓìŠ-
-psquid:S00117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì×–8ÈüÓìŠ-
-asquid:S2147c"DCombine this catch with the one at line 96, which has the same body.(Åç_8ÈüÓìŠ-
-asquid:S2147O"DCombine this catch with the one at line 76, which has the same body.(Åç_8ÈüÓìŠ-
-isquid:CommentedOutCodeLineo"<This block of commented-out lines of code should be removed.(¼ÕÕ•8ı¿„íŠ-
-asquid:S21479"DCombine this catch with the one at line 54, which has the same body.(Åç_8ÈüÓìŠ-
-Msquid:EmptyStatementUsageCheck7"Remove this empty statement.(”®¿î8ÈüÓìŠ-
-Msquid:EmptyStatementUsageCheck:"Remove this empty statement.(”®¿î8ÈüÓìŠ-
-Msquid:EmptyStatementUsageCheckP"Remove this empty statement.(”®¿î8ÈüÓìŠ-
-Msquid:EmptyStatementUsageCheck}"Remove this empty statement.(”®¿î8œ¢ÜìŠ-
-Msquid:EmptyStatementUsageCheckd"Remove this empty statement.(”®¿î8ÈüÓìŠ-
-"squid:SwitchLastCaseIsDefaultCheckœ"YComplete cases by adding the missing enum constants or add a default case to this switch.(ìè²ë8ŸÂÙìŠ-
-bsquid:S2147"ECombine this catch with the one at line 124, which has the same body.(Åç_8œ¢ÜìŠ-
-usquid:S11927"WDefine a constant instead of duplicating this literal "SQLException exception" 8 times.(”®¿î8§áÂìŠ-
-jsquid:S1301œ"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8ŸÂÙìŠ-
-Isquid:S2695v"+This "PreparedStatement" has no parameters.(‡ËÂÏ8öğôìŠ-
-msquid:S11928"JDefine a constant instead of duplicating this literal "Exception" 8 times.(—»ìıÿÿÿÿ8ÈüÓìŠ-
-Msquid:EmptyStatementUsageCheckM"Remove this empty statement.(”®¿î8ÈüÓìŠ-
+Ksquid:EmptyStatementUsageCheck"Remove this empty statement.(¯„ì8ÈüÓìŠ-
+Jsquid:EmptyStatementUsageCheck"Remove this empty statement.(Ã”¿8î¯Õš‹-
+nsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì×–8ÈüÓìŠ-
+Jsquid:EmptyStatementUsageCheck"Remove this empty statement.(Ã”¿8ÈüÓìŠ-
+Lsquid:S2695"+This "PreparedStatement" has no parameters.(±¬Ìúÿÿÿÿ8î¯Õš‹-
+ksquid:S1192"JDefine a constant instead of duplicating this literal "Exception" 8 times.(—»ìıÿÿÿÿ8ÈüÓìŠ-
+ssquid:S1192"XDefine a constant instead of duplicating this literal "ConnectionPoolException" 4 times.(Ã”¿8µ¿Ñš‹-
+Gsquid:S2695"+This "PreparedStatement" has no parameters.(‡ËÂÏ8öğôìŠ-
+ƒsquid:S1192"bDefine a constant instead of duplicating this literal "SELECT * FROM avia.reservation r " 3 times.(ÈÕŞùÿÿÿÿ8ÈüÓìŠ-
+Ksquid:EmptyStatementUsageCheck"Remove this empty statement.(¯„ì8î¯Õš‹-
+Jsquid:EmptyStatementUsageCheck"Remove this empty statement.(Ã”¿8ÈüÓìŠ-
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¼ÕÕ•8î¯Õš‹-
+Ksquid:EmptyStatementUsageCheck"Remove this empty statement.(¯„ì8î¯Õš‹-
+Ksquid:EmptyStatementUsageCheck"Remove this empty statement.(¯„ì8ÈüÓìŠ-
+isquid:S1192"MDefine a constant instead of duplicating this literal "SQLException" 8 times.(¯„ì8®ñ¯š‹-
+gsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(ìè²ë8î¯Õš‹-
+Jsquid:EmptyStatementUsageCheck"Remove this empty statement.(Ã”¿8î¯Õš‹-

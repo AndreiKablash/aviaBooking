@@ -1,6 +1,7 @@
 package com.htp.avia_booking.service.validator;
 
-import com.google.protobuf.ServiceException;
+
+import com.htp.avia_booking.service.ServiceException;
 
 public class ValidationException extends ServiceException {
 

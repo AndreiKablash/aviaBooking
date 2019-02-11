@@ -51,4 +51,30 @@ public class City extends Entity {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(name, city.name) &&
+                Objects.equals(code, city.code) &&
+                Objects.equals(country, city.country) &&
+                Objects.equals(description, city.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, code, country, description);
+    }
+
+    @Override
+    public String
+    toString() {
+        return "City{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", country=" + country +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
